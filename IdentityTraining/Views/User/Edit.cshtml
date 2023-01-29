@@ -1,0 +1,50 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@model IdentityUser
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>User</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label><h2>User name</h2></label>
+                <input asp-for="UserName" class="form-control" readonly />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <br />
+            <h4>Users roles</h4>
+            <ul>
+                @foreach (var role in ViewBag.UserRoles)
+                {
+                    <li>
+                        @role
+                    </li>
+                }
+            </ul>
+
+            <div class="btn-group">
+                <input type="submit" value="Unassing admin" asp-controller="User" asp-action="UnassignAdmin" class="btn btn-danger" />
+                &nbsp; &nbsp;
+                <input type="submit" value="Assign admin" asp-controller="User" asp-action="Edit" class="btn btn-primary" />
+            </div>
+
+        </form>
+    </div>
+</div>
+<br />
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
