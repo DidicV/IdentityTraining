@@ -1,4 +1,5 @@
 ﻿using IdentityTraining.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IdentityTraining.Controllers
@@ -12,6 +13,7 @@ namespace IdentityTraining.Controllers
             _context = context;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
             var roles = _context.Roles.OrderBy(r => r.Name).ToList();
