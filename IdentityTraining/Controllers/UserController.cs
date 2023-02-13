@@ -28,14 +28,19 @@ namespace IdentityTraining.Controllers
         {
             var user = _context.Users.FirstOrDefault(u => u.Id == id);
 
-            var userRoles = _userManager.GetRolesAsync(user).Result.ToList();
+            if (user != null)
+            {
+                var userRoles = _userManager.GetRolesAsync(user).Result.ToList();
 
-            var roles = _context.Roles.ToList();
+                var roles = _context.Roles.ToList();
 
-            ViewBag.UserRoles = userRoles;
-            ViewBag.Roles = roles;
+                ViewBag.UserRoles = userRoles;
+                ViewBag.Roles = roles;
 
-            return View(user);
+                return View(user);
+            }
+
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -79,10 +84,13 @@ namespace IdentityTraining.Controllers
         {
             var user = _context.Users.FirstOrDefault(u => u.Id == id);
 
-            _context.Users.Remove(user);
+            if(user != null) 
+            {
+                _context.Users.Remove(user);
 
-            _context.SaveChanges();
-
+                _context.SaveChanges();
+            }
+            
             return RedirectToAction("Index");
         }
     }
